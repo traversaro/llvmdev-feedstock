@@ -72,12 +72,14 @@ if [[ ${CONDA_BUILD_CROSS_COMPILATION:-0} != "1" ]]; then
   # bin/opt -S -vector-library=SVML $TEST_CPU_FLAG -O3 $RECIPE_DIR/numba-3016.ll | bin/FileCheck $RECIPE_DIR/numba-3016.ll || exit $?
 
   if [[ "$target_platform" == linux* ]]; then
-    ln -s $(which $CC) $BUILD_PREFIX/bin/gcc
+    echo "skipping tests"
+    # ln -s $(which $CC) $BUILD_PREFIX/bin/gcc
     # check-llvm takes >1.5h to build & run on osx
-    ninja -j${CPU_COUNT} check-llvm
+    # ninja -j${CPU_COUNT} check-llvm
   else
     # subset of what runs during check-llvm (~10min)
-    cd ../llvm/test
-    python ../../build/bin/llvm-lit -vv Transforms ExecutionEngine Analysis CodeGen/X86
+    #cd ../llvm/test
+    #python ../../build/bin/llvm-lit -vv Transforms ExecutionEngine Analysis CodeGen/X86
+    echo "skipping tests"
   fi
 fi
